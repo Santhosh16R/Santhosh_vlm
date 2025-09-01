@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Caption Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🖼️ AI Image Caption Generator</h1>
+            <p>Upload an image or paste a URL to generate detailed captions using FastVLM</p>
+        </header>
+
+        <div class="device-selector">
+            <label>
+                <input type="radio" name="device" value="cpu" checked>
+                <span>CPU (WASM)</span>
+            </label>
+            <label>
+                <input type="radio" name="device" value="webgpu">
+                <span>GPU (WebGPU)</span>
+            </label>
+        </div>
+
+        <div class="input-section">
+            <div class="input-tabs">
+                <button class="tab-btn active" data-tab="url">URL</button>
+                <button class="tab-btn" data-tab="upload">Upload</button>
+            </div>
+
+            <div class="tab-content active" id="url-tab">
+                <input type="text" id="image-url" placeholder="Enter image URL..." 
+                       value="https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/bee.jpg">
+                <button id="load-url-btn" class="primary-btn">Generate Caption</button>
+            </div>
+
+            <div class="tab-content" id="upload-tab">
+                <div class="upload-area" id="upload-area">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p>Drop image here or click to upload</p>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                </div>
+                <button id="upload-btn" class="primary-btn" disabled>Generate Caption</button>
+            </div>
+        </div>
+
+        <div class="preview-section" id="preview-section" style="display: none;">
+            <h3>Image Preview</h3>
+            <img id="preview-image" alt="Preview">
+        </div>
+
+        <div class="prompt-section">
+            <label for="custom-prompt">Custom Prompt (Optional)</label>
+            <textarea id="custom-prompt" placeholder="Leave empty for default: 'Describe this image in detail.'"></textarea>
+        </div>
+
+        <div class="loading-section" id="loading-section" style="display: none;">
+            <div class="loader"></div>
+            <p id="loading-text">Initializing model...</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="output-section" id="output-section" style="display: none;">
+            <h3>Generated Caption</h3>
+            <div class="output-content" id="output-content"></div>
+            <button id="copy-btn" class="secondary-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Copy Caption
+            </button>
+        </div>
+
+        <div class="error-section" id="error-section" style="display: none;">
+            <p id="error-message"></p>
+        </div>
+    </div>
+
+    <script type="module" src="index.js"></script>
+</body>
+</html>
